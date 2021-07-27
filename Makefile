@@ -8,4 +8,4 @@ help: build
 
 benchmarks:
 	mkdir target
-	java -jar example-account-jmh/target/benchmarks.jar -bm all -f 1 -t max -tu ms -o target/jmh.txt
+	java -jar example-account-jmh/target/benchmarks.jar -bm AverageTime -f 1 -t max -tu ms -o target/jmh.txt

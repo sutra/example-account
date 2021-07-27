@@ -14,6 +14,24 @@ import com.zaxxer.hikari.HikariDataSource;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+/**
+ * $ psql -U postgres
+ *
+ * CREATE USER example WITH ENCRYPTED PASSWORD 'G9&zqkNv3*XA8i2#';
+ * CREATE DATABASE example OWNER example;
+ * \q
+ *
+ * $ psql -U example
+ *
+ * CREATE TABLE account (
+ * 	id int8 NOT NULL,
+ * 	available int8 NOT NULL,
+ * 	"version" int8 NOT NULL,
+ * 	CONSTRAINT account_pk PRIMARY KEY (id)
+ * );
+ *
+ * -- SHOW max_connections;
+ */
 @State(Scope.Benchmark)
 public class PostgreSQLAccountServiceBenchmark implements AutoCloseable {
 
@@ -26,13 +44,15 @@ public class PostgreSQLAccountServiceBenchmark implements AutoCloseable {
 	private final JedisPool jedisPool;
 
 	public PostgreSQLAccountServiceBenchmark() {
-		final var poolSize = Integer.MAX_VALUE;
-		final var minIdle = Byte.MAX_VALUE;
+		final var poolSize = 100;
+		final var minIdle = 100;
 
-		var jdbcUrl = "jdbc:postgresql://localhost/lab?user=lab";
+		var jdbcUrl = "jdbc:postgresql://localhost/example";
 
 		var hikariConfig = new HikariConfig();
 		hikariConfig.setJdbcUrl(jdbcUrl);
+		hikariConfig.setUsername("example");
+		hikariConfig.setPassword("G9&zqkNv3*XA8i2#");
 		hikariConfig.setMaximumPoolSize(poolSize);
 		hikariConfig.setMinimumIdle(minIdle);
 		log.trace("hikariConfig: {}", () -> ToStringBuilder.reflectionToString(hikariConfig, ToStringStyle.MULTI_LINE_STYLE));
@@ -49,6 +69,12 @@ public class PostgreSQLAccountServiceBenchmark implements AutoCloseable {
 		this.jedisPool = new JedisPool(cfg, host, port);
 
 		this.accountService = new AccountService(dataSource, jedisPool);
+
+		// Initialize
+		final long count = 1_000_000;
+		if (this.accountService.count() < count) {
+			this.accountService.newAccounts(1, count, Short.MAX_VALUE);
+		}
 	}
 
 	@Benchmark

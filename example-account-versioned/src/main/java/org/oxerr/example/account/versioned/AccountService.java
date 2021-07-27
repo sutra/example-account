@@ -47,20 +47,44 @@ public class AccountService {
 		this.updateSql = "update account set available = ?, version = version + 1 where id = ? and version = ?";
 	}
 
-	public Account newAccount(final long id) {
+	public long count() {
+		final var countSql = "select count(*) from account";
+		try (
+			final var conn = this.dataSource.getConnection();
+			final var count = conn.prepareStatement(countSql);
+			final var rs = count.executeQuery();
+		) {
+			while (rs.next()) {
+				return rs.getLong(1);
+			}
+		} catch (SQLException e) {
+			throw new TransientDataAccessResourceException(e.getMessage(), e);
+		}
+
+		return 0L;
+	}
+
+	public void newAccounts(final long from, final long to, final long batchSize) {
 		final var insertSql = "insert into account(id, available, version) values(?, ?, ?)";
 		try (
 			final var conn = this.dataSource.getConnection();
 			final var insert = conn.prepareStatement(insertSql);
 		) {
-			insert.setLong(1, id);
-			insert.setLong(2, 0);
-			insert.setLong(3, 0);
-			insert.executeUpdate();
+			for (long id = from; id <= to; id++) {
+				log.trace("id: {}", id);
+				insert.setLong(1, id);
+				insert.setLong(2, 0);
+				insert.setLong(3, 0);
+				insert.addBatch();
+
+				if (id % batchSize == 0) {
+					insert.executeLargeBatch();
+				}
+			}
+			insert.executeLargeBatch();
 		} catch (SQLException e) {
 			log.warn(e.getMessage());
 		}
-		return this.get(id);
 	}
 
 	public Account addAmount(final long id, final long amount) {
