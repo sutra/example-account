@@ -18,7 +18,10 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>example-account-domain</module>
-		<module>example-account-versioned</module>
+		<module>example-account-service</module>
+		<module>example-account-service-jdbc</module>
+		<module>example-account-service-versioned</module>
+		<module>example-account-service-database-lock</module>
 		<module>example-account-jmh</module>
 	</modules>
 	<properties>

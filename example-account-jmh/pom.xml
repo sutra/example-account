@@ -103,7 +103,12 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>example-account-versioned</artifactId>
+			<artifactId>example-account-service-versioned</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>example-account-service-database-lock</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

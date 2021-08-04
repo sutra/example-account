@@ -11,8 +11,8 @@
 		<artifactId>example-account</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>example-account-versioned</artifactId>
-	<name>Example: account versioned</name>
+	<artifactId>example-account-service-jdbc</artifactId>
+	<name>Example: account service JDBC</name>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
@@ -40,7 +40,7 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>example-account-domain</artifactId>
+			<artifactId>example-account-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

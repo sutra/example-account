@@ -10,21 +10,15 @@
 				<Pattern>%d %-6p [%t] %C{1.}.%M:%L %m%n</Pattern>
 			</PatternLayout>
 		</File>
-		<Async name="async-console" bufferSize="4294967296">
-			<AppenderRef ref="console" />
-		</Async>
-		<Async name="async-file" bufferSize="4294967296">
-			<AppenderRef ref="file" />
-		</Async>
 	</Appenders>
 	<Loggers>
 		<Logger name="org.oxerr.example" level="ALL" additivity="false">
-			<AppenderRef ref="async-console" />
-			<AppenderRef ref="async-file" />
+			<AppenderRef ref="console" />
+			<AppenderRef ref="file" />
 		</Logger>
 		<Root level="WARN">
-			<AppenderRef ref="async-console" />
-			<AppenderRef ref="async-file" />
+			<AppenderRef ref="console" />
+			<AppenderRef ref="file" />
 		</Root>
 	</Loggers>
 </Configuration>

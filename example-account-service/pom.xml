@@ -11,6 +11,13 @@
 		<artifactId>example-account</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>example-account-domain</artifactId>
-	<name>Example: account domain</name>
+	<artifactId>example-account-service</artifactId>
+	<name>Example: account service</name>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>example-account-domain</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>
