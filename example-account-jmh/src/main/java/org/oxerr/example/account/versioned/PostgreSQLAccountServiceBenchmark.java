@@ -13,24 +13,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 
-/**
- * $ psql -U postgres
- *
- * CREATE USER example WITH ENCRYPTED PASSWORD 'G9&zqkNv3*XA8i2#';
- * CREATE DATABASE example OWNER example;
- * \q
- *
- * $ psql -U example
- *
- * CREATE TABLE account (
- * 	id int8 NOT NULL,
- * 	available int8 NOT NULL,
- * 	"version" int8 NOT NULL,
- * 	CONSTRAINT account_pk PRIMARY KEY (id)
- * );
- *
- * -- SHOW max_connections;
- */
 @State(Scope.Benchmark)
 public class PostgreSQLAccountServiceBenchmark implements AutoCloseable {
 

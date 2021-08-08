@@ -13,24 +13,6 @@ import com.zaxxer.hikari.HikariDataSource;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 
-/**
- * CREATE DATABASE example;
- * CREATE USER 'example'@'localhost' IDENTIFIED BY 'G9&zqkNv3*XA8i2#';
- * GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, INDEX, DROP, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES ON example.* TO 'example'@'localhost';
- *
- * USE example;
- * CREATE TABLE `account` (
- *   `id` bigint unsigned NOT NULL,
- *   `available` bigint NOT NULL,
- *   `version` bigint unsigned NOT NULL,
- *   PRIMARY KEY (`id`)
- * ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
- *
- * -- SHOW VARIABLES LIKE "max_connections";
- * -- SET GLOBAL max_connections = 500;
- * -- SHOW STATUS WHERE `variable_name` = 'Threads_connected';
- * -- SHOW PROCESSLIST;
- */
 @State(Scope.Benchmark)
 public class MySQLAccountServiceBenchmark implements AutoCloseable {
 
